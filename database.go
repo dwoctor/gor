@@ -63,7 +63,7 @@ func (this *Database) Fetch(key *string) (*[]byte, error) {
 	} else if found == false {
 		return nil, nil
 	} else {
-		return this.Get(key), nil
+		return this.Get(key)
 	}
 }
 
