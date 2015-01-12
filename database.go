@@ -8,8 +8,8 @@ type Database struct {
 }
 
 // Creates a new redis database.
-func NewDatabase(address string) *Collection {
-	return &Server{address: address}
+func NewDatabase(address string) *Database {
+	return &Database{address: address}
 }
 
 // Puts a key/value into the database.
@@ -58,12 +58,12 @@ func (this *Database) Has(key *string) (bool, error) {
 
 // Perfoms a Has and Get operation.
 func (this *Database) Fetch(key *string) (*[]byte, error) {
-	if found, err := FindUserFromRedis(key); err != nil {
+	if found, err := this.Has(key); err != nil {
 		return nil, err
 	} else if found == false {
 		return nil, nil
 	} else {
-		return this.LoadFromRedis(key)
+		return this.Get(key), nil
 	}
 }
 
