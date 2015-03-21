@@ -13,7 +13,7 @@ func NewDatabase(address string) *Database {
 }
 
 // Puts a key/value into the database.
-func (this *Database) Put(key *string, value *[]byte) error {
+func (this *Database) Put(key string, value []byte) error {
 	client, err := redis.Dial("tcp", this.address)
 	if err != nil {
 		return err
@@ -27,7 +27,7 @@ func (this *Database) Put(key *string, value *[]byte) error {
 }
 
 // Gets a key/value into the database.
-func (this *Database) Get(key *string) (*[]byte, error) {
+func (this *Database) Get(key string) ([]byte, error) {
 	client, err := redis.Dial("tcp", this.address)
 	if err != nil {
 		return nil, err
@@ -37,11 +37,11 @@ func (this *Database) Get(key *string) (*[]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &data, nil
+	return data, nil
 }
 
 // Does a key/value in the database exist.
-func (this *Database) Has(key *string) (bool, error) {
+func (this *Database) Has(key string) (bool, error) {
 	client, err := redis.Dial("tcp", this.address)
 	if err != nil {
 		return false, err
@@ -57,7 +57,7 @@ func (this *Database) Has(key *string) (bool, error) {
 }
 
 // Perfoms a Has and Get operation.
-func (this *Database) Fetch(key *string) (*[]byte, error) {
+func (this *Database) Fetch(key string) ([]byte, error) {
 	if found, err := this.Has(key); err != nil {
 		return nil, err
 	} else if found == false {
